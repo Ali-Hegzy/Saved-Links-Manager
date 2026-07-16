@@ -1,3 +1,3 @@
 <x-layout>
-    Hello from Laravel
+    <x-form action='/'/>
 </x-layout>
