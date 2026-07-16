@@ -5,25 +5,26 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('Auth.register');
     }
 
-    public function create(RegisterRequest $request){
+    public function create(RegisterRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
 
-        $request->validated();
+        dd($validated);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password, // the password has been hashed automatically
-        ]);
+        $user = User::create($validated);
 
         Auth::login($user);
+        $request->session()->regenerate();
 
         return redirect('/');
     }
