@@ -12,7 +12,6 @@
     >
     @csrf
 
-    <x-form.field name='name'/>
-    <x-form.field name='password' type='password'/>
+    {{ $slot }}
 
 </form>

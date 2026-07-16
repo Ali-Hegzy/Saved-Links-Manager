@@ -6,8 +6,8 @@
 
         <div class="flex items-center gap-2">
             @guest
-                <a href="/" class="p-2">Login</a>
-                <a href="/" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">Register</a>
+                <a href="/login" class="p-2">Login</a>
+                <a href="/register" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">Register</a>
             @endguest
             @auth
                 <a href="/">Logout</a> <!-- Temp tag, of course logout will be a form not an anchor tag -->
