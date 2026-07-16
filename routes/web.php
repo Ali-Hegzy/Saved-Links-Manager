@@ -9,4 +9,7 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::get('/register', [RegisterController::class,'index'])->middleware('guest');
+Route::post('/register', [RegisterController::class,'create'])->middleware('guest');
+
+
 Route::get('/login', [SessionController::class,'index'])->name('login')->middleware('guest');

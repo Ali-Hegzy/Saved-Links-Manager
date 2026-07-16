@@ -11,4 +11,8 @@
         name='{{ $name }}'
         class='outline-none p-1 pl-2 bg-primary-dimmed rounded-xl hover:bg-primary focus:bg-primary transition hover:text-text-main focus:text-text-main text-muted'
         >
+
+    @error($name)
+        <p class="text-red-600">{{ $message }}</p>
+    @enderror
 </div>
