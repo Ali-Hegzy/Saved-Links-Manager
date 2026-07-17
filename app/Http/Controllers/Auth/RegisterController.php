@@ -19,8 +19,6 @@ class RegisterController extends Controller
     {
         $validated = $request->validated();
 
-        dd($validated);
-
         $user = User::create($validated);
 
         Auth::login($user);
