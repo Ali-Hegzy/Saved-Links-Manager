@@ -10,7 +10,11 @@
                 <a href="/register" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">Register</a>
             @endguest
             @auth
-                <a href="/">Logout</a> <!-- Temp tag, of course logout will be a form not an anchor tag -->
+                <form action="/logout" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button class="p-2 bg-red-800 text-text-main rounded-2xl hover:bg-red-900 transition hover:text-muted cursor-pointer">LogOut</button>
+                </form>
             @endauth
         </div>
     </div>
