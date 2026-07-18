@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('auth');
+});
 
 Route::get('/register', [RegisterController::class,'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class,'create'])->middleware('guest');
