@@ -18,7 +18,7 @@ class SessionController extends Controller
 
         if(! Auth::attempt($validated)){
             return back()
-                ->withErrors(['password' => 'No user Found'])
+                ->withErrors(['password' => 'Email or password is incorrect.'])
                 ->withInput();
         }
 
