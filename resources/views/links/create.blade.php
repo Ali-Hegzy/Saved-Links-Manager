@@ -6,6 +6,8 @@
 
         <x-form.textarea name='description' />
 
+        <x-form.field name='link' />
+
         <x-form.field name='site' />
 
         <input type="hidden" id="status" name="status" value="0"/>
