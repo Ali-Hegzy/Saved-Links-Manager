@@ -10,6 +10,7 @@
                 <a href="/register" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">Register</a>
             @endguest
             @auth
+                <a href="/links/create" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">Create a link</a>
                 <form action="/logout" method="POST">
                     @method('DELETE')
                     @csrf

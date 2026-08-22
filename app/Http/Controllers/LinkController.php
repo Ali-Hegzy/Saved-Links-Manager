@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Link;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LinkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $links = Auth::user()->links;
+
+        return view('links.index',[
+            'links' => $links
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class LinkController extends Controller
      */
     public function create()
     {
-        //
+        return view('links.create');
     }
 
     /**
@@ -28,7 +30,23 @@ class LinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'title' => 'required|min:8|max:255',
+            'description' => 'required|min:8',
+            'site' => 'required|max:255',
+            'status' => 'boolean'
+        ]);
+
+        $link = new Link();
+        $link->user_id = Auth::user()->id;
+        $link->title = $validate['title'];
+        $link->description = $validate['description'];
+        $link->site = $validate['site'];
+        $link->status = $validate['status'];
+
+        $link->save();
+
+        return redirect('/links');
     }
 
     /**
