@@ -54,9 +54,11 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Link $link)
+    public function show(string $id)
     {
-        //
+        $link = Link::findOrFail($id)->where('user_id','=',Auth::user()->id)->get();
+
+        return view('links.show',["link"=>$link[0]]);
     }
 
     /**

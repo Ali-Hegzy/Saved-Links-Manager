@@ -4,6 +4,7 @@
     'site',
     'status',
     'url',
+    'id',
 ])
 
 <x-ui.card>
@@ -13,7 +14,7 @@
     <div class="flex justify-between">
         <p>Watched : {{ $status ? 'Yes' : 'No' }}</p>
         <div class="links">
-            <a href="link/{{ $id }}" class="underline text-amber-500">View Link</a>
+            <a href="/link/{{ $id }}" class="underline text-amber-500">View Link</a>
             <a href="{{ $url }}" target="_blank" class="underline text-red-500">Watch</a>
         </div>
     </div>
