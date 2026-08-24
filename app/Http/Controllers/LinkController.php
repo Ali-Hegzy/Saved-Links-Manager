@@ -33,7 +33,7 @@ class LinkController extends Controller
         $validate = $request->validate([
             'title' => 'required|min:8|max:255',
             'description' => 'required|min:8',
-            'link' => 'required|url',
+            'url' => 'required|url',
             'site' => 'required|max:255',
             'status' => 'boolean'
         ]);
@@ -42,7 +42,7 @@ class LinkController extends Controller
         $link->user_id = Auth::user()->id;
         $link->title = $validate['title'];
         $link->description = $validate['description'];
-        $link->link = $validate['link'];
+        $link->url = $validate['url'];
         $link->site = $validate['site'];
         $link->status = $validate['status'];
 

@@ -6,7 +6,7 @@
 
         <x-form.textarea name='description' />
 
-        <x-form.field name='link' />
+        <x-form.field name='url' />
 
         <x-form.field name='site' />
 
