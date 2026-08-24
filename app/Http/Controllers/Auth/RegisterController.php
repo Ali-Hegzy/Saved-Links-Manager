@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,10 @@ class RegisterController extends Controller
         $user = User::create($validated);
 
         Auth::login($user);
+        $category = new Category();
+        $category->user_id = Auth::user()->id;
+        $category->save();
+
         $request->session()->regenerate();
 
         return redirect('/');
