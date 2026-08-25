@@ -1,0 +1,16 @@
+@utility custom-scrollbar {
+    &::-webkit-scrollbar {
+        height: 0.6rem;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 1rem;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: var(--color-primary);
+        border-radius: 2rem;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: var(--color-primary-dimmed);
+    }
+}

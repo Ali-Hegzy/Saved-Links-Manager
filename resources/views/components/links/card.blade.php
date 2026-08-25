@@ -6,7 +6,6 @@
     'url',
     'id',
 ])
-
 <x-ui.card>
     <h2 class="text-2xl">{{ $title }}</h2>
     <p class="line-clamp-1">{{ $description }}</p>
