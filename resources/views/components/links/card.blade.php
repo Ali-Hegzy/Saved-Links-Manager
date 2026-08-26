@@ -2,7 +2,7 @@
     'link'
 ])
 <x-ui.card>
-    <h2 class="text-2xl">{{ $link->title }}</h2>
+    <h2 class="text-2xl line-clamp-1">{{ $link->title }}</h2>
     <p class="line-clamp-1">{{ $link->description }}</p>
     <p>Site : {{ $link->site }}</p>
     <div class="flex justify-between">
