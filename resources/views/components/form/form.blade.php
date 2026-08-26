@@ -1,5 +1,5 @@
 @props([
-    'action',
+    'action' => '',
     'method' => 'POST'
     ])
 

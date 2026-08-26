@@ -1,6 +1,7 @@
 @props([
     'name',
-    'type' => 'text'
+    'type' => 'text',
+    'value' => '',
 ])
 
 <div class='flex flex-col gap-1.5'>
@@ -10,7 +11,7 @@
         id='{{ $name }}'
         name='{{ $name }}'
         class='outline-none p-1 pl-2 bg-primary-dimmed rounded-xl hover:bg-primary focus:bg-primary transition hover:text-text-main focus:text-text-main text-muted'
-        value="{{ old($name) }}"
+        value="{{ old($name, $value) }}"
         >
 
     @error($name)

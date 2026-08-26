@@ -59,7 +59,6 @@ class LinkController extends Controller
      */
     public function show(Link $link)
     {
-
         Gate::authorize('view',$link);
 
         return view('links.show',["link" => $link]);
@@ -70,7 +69,9 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        //
+        Gate::authorize('view',$link);
+
+        return view('links.edit',["link" => $link]);
     }
 
     /**
@@ -78,7 +79,16 @@ class LinkController extends Controller
      */
     public function update(Request $request, Link $link)
     {
-        //
+        Gate::authorize('update',$link);
+
+        $link->title = $request->title;
+        $link->description = $request->description;
+        $link->url = $request->url;
+        $link->site = $request->site;
+        $link->status = $request->status;
+        $link->save();
+
+        return redirect('/links');
     }
 
     /**

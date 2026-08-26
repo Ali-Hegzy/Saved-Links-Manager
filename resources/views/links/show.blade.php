@@ -8,5 +8,11 @@
             <a href="{{ $link->url }}" target="_blank" class="text-red-500 underline">{{ $link->url }}</a>
         </p>
         <p>Status : {{ $link->status ? "Watched" : "Not watched" }}</p>
+        <div class="options flex flex-row gap-5">
+            <p>Options: </p>
+            <div class="buttons flex flex-row">
+                <a href="/link/{{ $link->id }}/edit" target="_blank" class="text-amber-500 underline">Edit</a>
+            </div>
+        </div>
     </x-ui.card>
 </x-layout>

@@ -35,9 +35,9 @@ class LinkPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Link $link): bool
+    public function update(User $user, Link $link): Response
     {
-        return false;
+        return $user->id === $link->user_id ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**
