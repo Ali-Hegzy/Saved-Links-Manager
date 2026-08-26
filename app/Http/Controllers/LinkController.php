@@ -9,9 +9,24 @@ use Illuminate\Support\Facades\Gate;
 
 class LinkController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $links = Auth::user()->links;
+        if(!empty($request->query())){
+            $sites = array_keys($request->all());
+            array_shift($sites);
+
+            $links = Link::whereLike('title',"%$request->search%",false)->where('user_id',Auth::id());
+
+            if(count($sites)){
+                $links = $links->whereIn('site',$sites);
+            }
+
+            $links = $links->get();
+
+        }else{
+            $links = Auth::user()->links;
+        }
+
         $categories = Auth::user()->categories;
 
         return view('links.index',[
