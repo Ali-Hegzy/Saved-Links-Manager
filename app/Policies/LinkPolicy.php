@@ -19,9 +19,9 @@ class LinkPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Link $link): bool
+    public function view(User $user, Link $link): Response
     {
-        return false;
+        return $user->id === $link->user_id ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**

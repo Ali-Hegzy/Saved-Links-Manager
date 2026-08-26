@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class LinkController extends Controller
 {
@@ -56,11 +57,12 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Link $link)
     {
-        $link = Link::findOrFail($id)->where('user_id','=',Auth::user()->id)->get();
 
-        return view('links.show',["link"=>$link[0]]);
+        Gate::authorize('view',$link);
+
+        return view('links.show',["link" => $link]);
     }
 
     /**
