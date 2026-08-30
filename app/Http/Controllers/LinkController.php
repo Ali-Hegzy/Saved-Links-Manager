@@ -6,19 +6,20 @@ use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class LinkController extends Controller
 {
     public function index(Request $request)
     {
         if(!empty($request->query())){
-            $sites = array_keys($request->all());
-            array_shift($sites);
+            $categories = array_keys($request->all());
+            array_shift($categories);
 
             $links = Link::whereLike('title',"%$request->search%",false)->where('user_id',Auth::id());
 
-            if(count($sites)){
-                $links = $links->whereIn('site',$sites);
+            if(count($categories)){
+                $links = $links->whereIn('site',$categories);
             }
 
             $links = $links->get();
@@ -40,7 +41,9 @@ class LinkController extends Controller
      */
     public function create()
     {
-        return view('links.create');
+        $categories = Auth::user()->categories;
+
+        return view('links.create',['categories' => $categories]);
     }
 
     /**
@@ -52,7 +55,9 @@ class LinkController extends Controller
             'title' => 'required|min:8|max:255',
             'description' => 'required|min:8',
             'url' => 'required|url',
-            'site' => 'required|max:255',
+            'category' => ['required', Rule::exists('categories','name')->where(function ($query){
+                $query->where('user_id', auth()->id());
+            })],
             'status' => 'boolean'
         ]);
 
@@ -61,7 +66,7 @@ class LinkController extends Controller
         $link->title = $validate['title'];
         $link->description = $validate['description'];
         $link->url = $validate['url'];
-        $link->site = $validate['site'];
+        $link->site = $validate['category'];
         $link->status = $validate['status'];
 
         $link->save();
