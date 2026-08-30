@@ -25,4 +25,4 @@ Route::get('/link/{link}', [LinkController::class,'show'])->middleware('auth');
 Route::get('/link/{link}/edit', [LinkController::class,'edit'])->middleware('auth');
 Route::post('/link/{link}/edit', [LinkController::class,'update'])->middleware('auth');
 
-Route::get('/profile',[UserController::class,'index']);
+Route::get('/profile',[UserController::class,'index'])->middleware('auth');

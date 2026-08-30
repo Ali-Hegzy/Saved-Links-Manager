@@ -10,7 +10,10 @@
                 </x-ui.card>
             @endforeach
                 <x-ui.card class="w-fit bg-bg-main cursor-pointer" id="add">
-                    + Add
+                <form method='POST' class="flex flex-row gap-1">
+                    <input type='text' placeholder='Add a new site' class="outline-none"/>
+                    <input type="submit" class='cursor-pointer bg-primary px-2 rounded' name='site' value="Add"/>
+                </form>
                 </x-ui.card>
             @error('site')
                 <p class="text-red-600">{{ $message }}</p>
@@ -19,29 +22,3 @@
         <p>Number of Links you have : {{ $linksCount }} {{ Str::plural('Link',$linksCount) }}</p>
     </x-ui.card>
 </x-layout>
-
-<script>
-    const add = document.getElementById('add');
-
-    add.addEventListener('click', () => {
-        if(!add.classList.contains('active')){
-            add.classList.add('active');
-            add.innerHTML = `
-                <form method='POST' class="flex flex-row gap-1">
-                    <input type='text' placeholder='Add site name' class="outline-none"/>
-                    <input type="submit" class='cursor-pointer bg-primary px-2 rounded' name='site' value="Add"/>
-                    <a class='cursor-pointer bg-red-600 px-2 rounded' id='close'> Close </a>
-                </form>
-            `;
-
-            const close = document.getElementById('close');
-
-            close.addEventListener('click', (e) => {
-                e.stopPropagation();
-                add.innerHTML = '+ Add';
-                add.classList.toggle('active');
-            });
-        }
-    });
-
-</script>
