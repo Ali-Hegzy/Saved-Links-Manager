@@ -38,8 +38,8 @@ class User extends Authenticatable
         return $this->hasMany(Link::class);
     }
 
-    public function categories(){
-        return $this->hasMany(Category::class);
+    public function sites(){
+        return $this->hasMany(Site::class);
     }
 
     public function inventories(){

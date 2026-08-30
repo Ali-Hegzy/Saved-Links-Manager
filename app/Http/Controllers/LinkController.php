@@ -13,13 +13,13 @@ class LinkController extends Controller
     public function index(Request $request)
     {
         if(!empty($request->query())){
-            $categories = array_keys($request->all());
-            array_shift($categories);
+            $sites = array_keys($request->all());
+            array_shift($sites);
 
             $links = Link::whereLike('title',"%$request->search%",false)->where('user_id',Auth::id());
 
-            if(count($categories)){
-                $links = $links->whereIn('site',$categories);
+            if(count($sites)){
+                $links = $links->whereIn('site',$sites);
             }
 
             $links = $links->get();
@@ -28,11 +28,11 @@ class LinkController extends Controller
             $links = Auth::user()->links;
         }
 
-        $categories = Auth::user()->categories;
+        $sites = Auth::user()->sites;
 
         return view('links.index',[
             'links' => $links,
-            'categories' => $categories,
+            'sites' => $sites,
         ]);
     }
 
@@ -41,9 +41,9 @@ class LinkController extends Controller
      */
     public function create()
     {
-        $categories = Auth::user()->categories;
+        $sites = Auth::user()->sites;
 
-        return view('links.create',['categories' => $categories]);
+        return view('links.create',['sites' => $sites]);
     }
 
     /**
@@ -55,7 +55,7 @@ class LinkController extends Controller
             'title' => 'required|min:8|max:255',
             'description' => 'required|min:8',
             'url' => 'required|url',
-            'category' => ['required', Rule::exists('categories','name')->where(function ($query){
+            'site' => ['required', Rule::exists('sities','name')->where(function ($query){
                 $query->where('user_id', auth()->id());
             })],
             'status' => 'boolean'
@@ -66,7 +66,7 @@ class LinkController extends Controller
         $link->title = $validate['title'];
         $link->description = $validate['description'];
         $link->url = $validate['url'];
-        $link->site = $validate['category'];
+        $link->site = $validate['site'];
         $link->status = $validate['status'];
 
         $link->save();

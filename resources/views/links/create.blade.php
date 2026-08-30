@@ -8,7 +8,7 @@
 
         <x-form.field name='url' />
 
-        <x-form.selectionList name='category' :items="$categories"/>
+        <x-form.selectionList name='site' :items="$sites"/>
 
         <input type="hidden" id="status" name="status" value="0"/>
 
