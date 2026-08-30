@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,4 @@ Route::get('/link/{link}/edit', [LinkController::class,'edit'])->middleware('aut
 Route::post('/link/{link}/edit', [LinkController::class,'update'])->middleware('auth');
 
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');
+Route::post('/site/create',[SiteController::class,'create'])->middleware('auth');

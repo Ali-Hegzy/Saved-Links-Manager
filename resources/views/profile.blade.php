@@ -10,9 +10,9 @@
                 </x-ui.card>
             @endforeach
                 <x-ui.card class="w-fit bg-bg-main cursor-pointer" id="add">
-                <form method='POST' class="flex flex-row gap-1">
-                    <input type='text' placeholder='Add a new site' class="outline-none"/>
-                    <input type="submit" class='cursor-pointer bg-primary px-2 rounded' name='site' value="Add"/>
+                <form method='POST' action="/site/create" class="flex flex-row gap-1">
+                    <input type='text' placeholder='Add a new site' name='site' class="outline-none"/>
+                    <input type="submit" class='cursor-pointer bg-primary px-2 rounded' value="Add"/>
                 </form>
                 </x-ui.card>
             @error('site')
