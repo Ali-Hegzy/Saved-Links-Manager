@@ -55,7 +55,7 @@ class LinkController extends Controller
             'title' => 'required|min:8|max:255',
             'description' => 'required|min:8',
             'url' => 'required|url',
-            'site' => ['required', Rule::exists('sities','name')->where(function ($query){
+            'site' => ['required', Rule::exists('sites','name')->where(function ($query){
                 $query->where('user_id', auth()->id());
             })],
             'status' => 'boolean'

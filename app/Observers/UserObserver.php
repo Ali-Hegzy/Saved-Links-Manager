@@ -11,13 +11,13 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $defaultSities = [
+        $defaultSites = [
             ['name' => 'Linkedin'],
             ['name' => 'Reddit'],
             ['name' => 'Facebook'],
         ];
 
-        $user->sites()->createMany($defaultSities);
+        $user->sites()->createMany($defaultSites);
     }
 
     /**
