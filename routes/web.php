@@ -24,7 +24,7 @@ Route::get('/links/create', [LinkController::class,'create'])->middleware('auth'
 Route::post('/links/create', [LinkController::class,'store'])->middleware('auth');
 Route::get('/link/{link}', [LinkController::class,'show'])->middleware('auth');
 Route::get('/link/{link}/edit', [LinkController::class,'edit'])->middleware('auth');
-Route::post('/link/{link}/edit', [LinkController::class,'update'])->middleware('auth');
+Route::put('/link/{link}/edit', [LinkController::class,'update'])->middleware('auth');
 
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');
 Route::post('/site/create',[SiteController::class,'create'])->middleware('auth');
