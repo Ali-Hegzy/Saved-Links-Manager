@@ -1,6 +1,7 @@
 @props([
     'action' => '',
-    'method' => 'POST'
+    'method' => 'POST',
+    'advMethod' => '',
     ])
 
 <form
@@ -10,6 +11,9 @@
         'class' => 'max-w-2xl mx-auto pt-9 gap-5 flex flex-col'
     ]) }}
     >
+    @if ($advMethod)
+        @method($advMethod)
+    @endif
     @csrf
 
     {{ $slot }}
