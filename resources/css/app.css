@@ -26,3 +26,5 @@
     background-image : linear-gradient(to top, var(--color-bg-card), transparent), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"><path d="M0 0 l30 30 M30 0 l-30 30 M0 15 h30 M15 0 v30" stroke="%233c0753" stroke-width="0.5" stroke-opacity="0.7"/></svg>');
     background-repeat: repeat;
 }
+
+[x-cloak] { display: none !important; }
