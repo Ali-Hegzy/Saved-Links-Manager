@@ -130,6 +130,10 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        //
+        Gate::authorize('delete',$link);
+
+        Link::destroy($link->id);
+
+        return redirect('/links');
     }
 }

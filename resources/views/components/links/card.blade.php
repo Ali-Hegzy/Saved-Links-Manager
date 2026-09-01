@@ -2,7 +2,27 @@
     'link'
 ])
 <x-ui.card>
-    <h2 class="text-2xl line-clamp-1">{{ $link->title }}</h2>
+    <div class="upper flex flex-row justify-between">
+        <h2 class="text-2xl line-clamp-1">{{ $link->title }}</h2>
+        <div x-data="{ open: false }" class="relative flex">
+            <button @click="open = ! open" class="cursor-pointer">...</button>
+
+            <div x-cloak x-show="open" @click.outside="open = false">
+                <x-ui.card class="absolute right-0 top-8 bg-bg-main">
+                    <ul class="flex flex-col gap-2">
+                        <li>
+                            <form action="/link/{{ $link->id }}/delete" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button class="cursor-pointer">DELETE</button>
+                            </form>
+                        </li>
+                    </ul>
+                </x-ui.card>
+            </div>
+
+        </div>
+    </div>
     <p class="line-clamp-1">{{ $link->description }}</p>
     <p>Site : {{ $link->site }}</p>
     <div class="flex justify-between">

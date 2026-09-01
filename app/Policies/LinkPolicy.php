@@ -43,9 +43,9 @@ class LinkPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Link $link): bool
+    public function delete(User $user, Link $link): Response
     {
-        return false;
+        return $user->id === $link->user_id ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**
