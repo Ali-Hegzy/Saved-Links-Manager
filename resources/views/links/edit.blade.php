@@ -8,7 +8,7 @@
 
         <x-form.field name='url' value="{{ $link->url }}"/>
 
-        <x-form.field name='site' value="{{ $link->site }}" />
+        <x-form.selectionList name='site' :items="$sites"/>
 
         <input type="hidden" id="status" name="status" value="0"/>
 

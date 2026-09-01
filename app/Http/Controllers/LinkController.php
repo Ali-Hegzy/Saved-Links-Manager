@@ -90,8 +90,12 @@ class LinkController extends Controller
     public function edit(Link $link)
     {
         Gate::authorize('view',$link);
+        $sites = Auth::user()->sites;
 
-        return view('links.edit',["link" => $link]);
+        return view('links.edit',[
+            "link" => $link,
+            "sites" => $sites,
+        ]);
     }
 
     /**
@@ -101,11 +105,21 @@ class LinkController extends Controller
     {
         Gate::authorize('update',$link);
 
-        $link->title = $request->title;
-        $link->description = $request->description;
-        $link->url = $request->url;
-        $link->site = $request->site;
-        $link->status = $request->status;
+        $validate = $request->validate([
+            'title' => 'required|min:8|max:255',
+            'description' => 'required|min:8',
+            'url' => 'required|url',
+            'site' => ['required', Rule::exists('sites','name')->where(function ($query){
+                $query->where('user_id', auth()->id());
+            })],
+            'status' => 'boolean'
+        ]);
+
+        $link->title = $validate['title'];
+        $link->description = $validate['description'];
+        $link->url = $validate['url'];
+        $link->site = $validate['site'];
+        $link->status = $validate['status'];
         $link->save();
 
         return redirect('/links');
