@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SessionController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -29,3 +30,7 @@ Route::delete('/link/{link}/delete', [LinkController::class,'destroy'])->middlew
 
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');
 Route::post('/site/create',[SiteController::class,'create'])->middleware('auth');
+
+Route::middleware('auth')->group(function (){
+    Route::resource('inventories',InventoryController::class);
+});

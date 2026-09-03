@@ -55,6 +55,7 @@
                         <x-ui.card class="absolute right-0 top-10">
                             <ul class="p-2 flex flex-col gap-2">
                                 <li><a href="/profile">Profile</a></li>
+                                <li><a href="/inventories">Inventories</a></li>
                                 <li>
                                     <form action="/logout" method="POST">
                                         @method('DELETE')
