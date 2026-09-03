@@ -5,7 +5,7 @@
     @forelse($links as $link)
         <x-links.card :link="$link" />
     @empty
-        There is no links <a href="/links/create" class="text-primary underline">Create One</a>
+        There is no links <a href="{{ route('links.create') }}" class="text-primary underline">Create One</a>
     @endempty
     </div>
 </x-layout>

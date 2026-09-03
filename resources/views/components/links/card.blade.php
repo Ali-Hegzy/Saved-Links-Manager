@@ -7,7 +7,7 @@
         <x-ui.vKebabMenu>
             <ul class="flex flex-col gap-2">
                 <li>
-                    <form action="/link/{{ $link->id }}/delete" method="POST">
+                    <form action="{{ route('links.destroy', $link) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <button class="cursor-pointer">DELETE</button>
@@ -21,7 +21,7 @@
     <div class="flex justify-between">
         <p>Watched : {{ $link->status ? 'Yes' : 'No' }}</p>
         <div class="links">
-            <a href="/link/{{ $link->id }}" class="underline text-amber-500">View Link</a>
+            <a href="{{ route('links.show', $link) }}" class="underline text-amber-500">View Link</a>
             <a href="{{ $link->url }}" target="_blank" class="underline text-red-500">Watch</a>
         </div>
     </div>

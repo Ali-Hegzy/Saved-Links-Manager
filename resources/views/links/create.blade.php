@@ -1,5 +1,5 @@
 <x-layout>
-    <x-form action='/links/create'>
+    <x-form action='{{ route("links.store") }}'>
         <x-form.header title="Create a link" description="Create a saved link to watch it again"/>
 
         <x-form.field name='title'/>

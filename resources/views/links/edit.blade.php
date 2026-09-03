@@ -1,5 +1,5 @@
 <x-layout>
-    <x-form advMethod='PUT'>
+    <x-form advMethod='PUT' action='{{ route("links.update", $link) }}'>
         <x-form.header title="Edit Link" description="Edit the link to fix errors"/>
 
         <x-form.field name='title' value="{{ $link->title }}"/>
