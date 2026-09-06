@@ -1,5 +1,5 @@
 <x-layout>
-    <x-filter :sites="$sites"/>
+    <x-filter :chips="$sites"/>
 
     <div class="cards grid md:grid-cols-2 lg:grid-cols-3 gap-4">
     @forelse($links as $link)
