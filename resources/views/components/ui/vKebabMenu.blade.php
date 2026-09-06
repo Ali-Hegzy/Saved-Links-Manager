@@ -12,7 +12,7 @@
     </button>
 
     <div x-cloak x-show="open" @click.outside="open = false">
-        <x-ui.card class="absolute right-0 top-8 bg-bg-main">
+        <x-ui.card class="absolute right-0 top-8 bg-bg-main z-50">
             {{ $slot }}
         </x-ui.card>
     </div>

@@ -52,7 +52,7 @@
                     </button>
 
                     <div x-cloak x-show="open" @click.outside="open = false">
-                        <x-ui.card class="absolute right-0 top-10">
+                        <x-ui.card class="absolute right-0 top-10 z-50">
                             <ul class="p-2 flex flex-col gap-2">
                                 <li><a href="/profile">Profile</a></li>
                                 <li><a href="/inventories">Inventories</a></li>
