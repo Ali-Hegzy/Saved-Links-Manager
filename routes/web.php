@@ -25,7 +25,10 @@ Route::middleware('auth')->group(function (){
 });
 
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');
-Route::post('/site/create',[SiteController::class,'create'])->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('sites', SiteController::class);
+});
 
 Route::middleware('auth')->group(function (){
     Route::resource('inventories',InventoryController::class);

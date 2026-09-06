@@ -5,19 +5,11 @@
         <div class="flex flex-row  flex-wrap gap-4 items-center ">
             <p>Sites : </p>
             @foreach ($sites as $site)
-                <x-ui.card class="w-fit bg-bg-main">
+                <x-ui.card class="w-fit bg-bg-main flex">
                     {{ $site->name }}
                 </x-ui.card>
             @endforeach
-                <x-ui.card class="w-fit bg-bg-main cursor-pointer" id="add">
-                <form method='POST' action="/site/create" class="flex flex-row gap-1">
-                    <input type='text' placeholder='Add a new site' name='site' class="outline-none"/>
-                    <input type="submit" class='cursor-pointer bg-primary px-2 rounded' value="Add"/>
-                </form>
-                </x-ui.card>
-            @error('site')
-                <p class="text-red-600">{{ $message }}</p>
-            @enderror
+                <a href="{{ route('sites.index') }}" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">View all</a>
         </div>
         <p>Number of Links you have : {{ $linksCount }} {{ Str::plural('Link',$linksCount) }}</p>
     </x-ui.card>
