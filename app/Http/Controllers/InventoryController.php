@@ -47,7 +47,7 @@ class InventoryController extends Controller
 
         $inventory->save();
 
-        return redirect('/inventories');
+        return redirect('/inventories')->with('inventory.store', 'Inventory Created Successfully');
     }
 
     /**
@@ -100,7 +100,7 @@ class InventoryController extends Controller
         $inventory->description = $validation['description'];
         $inventory->save();
 
-        return redirect('/inventories');
+        return redirect('/inventories')->with('inventory.update', 'Inventory Updated Successfully');
     }
 
     /**
@@ -112,6 +112,6 @@ class InventoryController extends Controller
 
         $inventory::destroy($inventory->id);
 
-        return redirect(route('inventories.index'));
+        return redirect(route('inventories.index'))->with('inventory.destroy', 'Inventory Deleted Successfully');
     }
 }

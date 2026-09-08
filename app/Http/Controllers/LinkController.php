@@ -73,7 +73,7 @@ class LinkController extends Controller
 
         $link->save();
 
-        return redirect('/links');
+        return redirect('/links')->with('link.store', 'Link Created Successfully');
     }
 
     /**
@@ -124,7 +124,7 @@ class LinkController extends Controller
         $link->status = $validate['status'];
         $link->save();
 
-        return redirect('/links');
+        return redirect('/links')->with('link.update', 'Link Updated Successfully');
     }
 
     /**
@@ -136,6 +136,6 @@ class LinkController extends Controller
 
         Link::destroy($link->id);
 
-        return redirect('/links');
+        return redirect('/links')->with('link.destroy', 'Link Deleted Successfully');
     }
 }

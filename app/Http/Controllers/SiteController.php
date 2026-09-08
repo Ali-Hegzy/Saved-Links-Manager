@@ -28,7 +28,7 @@ class SiteController extends Controller
 
         $site->save();
 
-        return redirect('/sites');
+        return redirect('/sites')->with('site.store', 'Site Created Successfully');
     }
 
     public function edit(Site $site){
@@ -48,7 +48,7 @@ class SiteController extends Controller
 
         Link::where('site',$old)->where('user_id',Auth::id())->update(['site' => $validation['name']]);
 
-        return redirect('/sites');
+        return redirect('/sites')->with('site.update', 'Site Updated Successfully');
     }
 
     public function destroy(Site $site){
@@ -56,6 +56,6 @@ class SiteController extends Controller
 
         Link::where('site',$site->name)->where('user_id',Auth::id())->update(['site' => '']);
 
-        return redirect('/sites');
+        return redirect('/sites')->with('site.destroy', 'Site deleted Successfully');
     }
 }

@@ -24,6 +24,7 @@
             </div>
         </div>
     </div>
+    <x-layout.sessions />
     </main>
 </body>
 </html>

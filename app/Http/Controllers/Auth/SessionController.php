@@ -24,7 +24,7 @@ class SessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/');
+        return redirect()->intended('/')->with('loggedIn', 'Logged In Successfully.');
     }
 
     public function destroy(Request $request){
@@ -33,6 +33,6 @@ class SessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/login')->with('loggedOut', 'Logged Out Successfully.');
     }
 }
