@@ -1,4 +1,7 @@
 <x-layout>
+    <div class="upper my-5">
+        <a href="{{ route('inventories.create') }}" class="p-2 bg-primary text-text-main rounded-2xl hover:bg-secondary transition hover:text-muted">Create an Inventory</a>
+    </div>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse($inventories as $inventory)
                 <x-ui.card>
@@ -31,7 +34,7 @@
                     <p>{{ $inventory->description }}</p>
                 </x-ui.card>
         @empty
-            You don't have any inventory yet, <a href="{{ route('inventories.create') }}" class="text-primary underline"> Create one. </a>
+            You don't have any inventory yet. </a>
         @endempty
     </div>
 </x-layout>

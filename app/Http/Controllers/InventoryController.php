@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
+use App\Models\InventoryItem;
+use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -56,7 +58,21 @@ class InventoryController extends Controller
     {
         Gate::authorize('view',$inventory);
 
-        return view('Inventory.show',["inventory" => $inventory]);
+        $inventories = Auth::user()->inventories;
+        $items = $inventory->items;
+        $ids = [];
+
+        foreach($items as $item){
+            $ids[] = $item->link_id;
+        }
+
+        $links = Link::whereIn('id',$ids)->get();
+
+        return view('Inventory.show',[
+            "inventory" => $inventory,
+            "items" => $links,
+            "inventories" => $inventories,
+        ]);
     }
 
     /**

@@ -29,10 +29,12 @@ class LinkController extends Controller
         }
 
         $sites = Auth::user()->sites;
+        $inventories = Auth::user()->inventories;
 
         return view('links.index',[
             'links' => $links,
             'sites' => $sites,
+            'inventories' => $inventories,
         ]);
     }
 

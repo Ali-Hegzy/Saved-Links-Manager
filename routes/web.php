@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\inventoryItemController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -33,3 +34,6 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function (){
     Route::resource('inventories',InventoryController::class);
 });
+
+Route::post('/invItems', [inventoryItemController::class, 'store'])->name('inventoryItems.store');
+Route::delete('/invItems', [inventoryItemController::class, 'destroy'])->name('inventoryItems.destroy');

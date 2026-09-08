@@ -4,5 +4,10 @@
         <p>{{ $inventory->description }}</p>
     </x-ui.card>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+        @forelse ($items as $item)
+            <x-links.card :link="$item" :currentInv="$inventory" :inventories="$inventories" />
+        @empty
+            You don't have links here!
+        @endforelse
     </div>
 </x-layout>
