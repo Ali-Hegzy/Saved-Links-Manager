@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
-use App\Models\InventoryItem;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
