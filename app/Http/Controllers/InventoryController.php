@@ -13,9 +13,9 @@ class InventoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $inventories = Auth::user()->inventories;
+        $inventories = Inventory::whereLike('name',"%$request->search%",false)->where('user_id',Auth::id())->get();
 
         return view('Inventory.index', [
             "inventories" => $inventories,
