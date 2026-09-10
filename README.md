@@ -10,7 +10,7 @@ A web site that helps you to manage your saved links.
 ## Technologies
 - **BackEnd** : Laravel
 - **FrontEnd** : Blade, Tailwind, Alpine.js
-- **DataBasw** : Sqlite
+- **DataBase** : Sqlite
 
 ## Local Installation and Execution Steps
 ```bash
