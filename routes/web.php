@@ -35,5 +35,5 @@ Route::middleware('auth')->group(function (){
     Route::resource('inventories',InventoryController::class);
 });
 
-Route::post('/invItems', [inventoryItemController::class, 'store'])->name('inventoryItems.store');
-Route::delete('/invItems', [inventoryItemController::class, 'destroy'])->name('inventoryItems.destroy');
+Route::post('/invItems', [inventoryItemController::class, 'store'])->middleware('auth')->name('inventoryItems.store');
+Route::delete('/invItems', [inventoryItemController::class, 'destroy'])->middleware('auth')->name('inventoryItems.destroy');

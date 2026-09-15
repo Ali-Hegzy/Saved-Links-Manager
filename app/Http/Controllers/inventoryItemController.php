@@ -2,62 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InventoryItemRequest;
 use App\Models\Inventory;
 use App\Models\InventoryItem;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class inventoryItemController extends Controller
 {
-    public function store(Request $request){
-        // Check first that this item and this inventory is belong to the Auth user.
-        $link = $request->user()->links()->findOrFail($request->item);
-        $inventory = $request->user()->inventories()->findOrFail($request->inventory);
+    private static RedirectResponse $redirect;
+    private static string $redirectKey = 'invMessage';
 
-        $redirect = back();
-        $redirectKey = 'invMessage';
-
-        $check = InventoryItem::where('link_id', $link->id)
-        ->where('inventory_id', $inventory->id)
-        ->get()
-        ->isNotEmpty();
-
-        if($check){
-            return $redirect->with($redirectKey, 'This item is already at this inventory');
-        }
-
-        $inventoryItem = new InventoryItem();
-        $inventoryItem->link_id = $link->id;
-        $inventoryItem->inventory_id = $inventory->id;
-
-        $inventoryItem->save();
-
-        return $redirect->with($redirectKey, 'Item stored successfully');
+    public function __construct()
+    {
+        self::$redirect = back();
     }
 
-    public function destroy(Request $request){
-        $link = $request->user()->links()->findOrFail($request->item);
-        $inventory = $request->user()->inventories()->findOrFail($request->inventory);
+    private function redirectWith(string $message, ?string $key = null) : RedirectResponse
+    {
+        $key = $key ?? self::$redirectKey;
+        return self::$redirect->with($key, $message);
+    }
 
-        $redirect = back();
-        $redirectKey = 'invMessage';
+    /**
+     * Check that this `item(link)` and this `inventory` is belong to the current Auth user. And reply with `404 Not Found` if the `link(item)` or `inventory` or both not found or aren't belong the user
+     * @param InventoryItemRequest $validatedRequest the validated data from the InventoryItemRequest
+     * @return array the related `link` and `inventory`
+     */
+    private function ensureUserOwns(InventoryItemRequest $validatedRequest) : array
+    {
+        $authUser = Auth::user();
 
-        $check = InventoryItem::where('link_id', $link->id)
-        ->where('inventory_id', $inventory->id)
-        ->get()
-        ->isEmpty();
+        $link = $authUser->links()->findOrFail($validatedRequest->item);
+        $inventory = $authUser->inventories()->findOrFail($validatedRequest->inventory);
 
-        if($check){
-            return $redirect->with($redirectKey, 'There is a problem at deleting');
+        return [$link, $inventory];
+    }
+
+    public function store(InventoryItemRequest $request){
+        [$link, $inventory] = $this->ensureUserOwns($request);
+
+        $item = InventoryItem::firstOrCreate([
+            'link_id' => $link->id,
+            'inventory_id' => $inventory->id,
+        ]);
+
+        if (! $item->wasRecentlyCreated) {
+            return $this->redirectWith('This item is already at this inventory');
         }
 
-        $id = InventoryItem::where('link_id', $link->id)
+        return $this->redirectWith('Item stored successfully');
+    }
+
+    public function destroy(InventoryItemRequest $request){
+
+        [$link, $inventory] = $this->ensureUserOwns($request);
+
+        $deleted = InventoryItem::where('link_id', $link->id)
         ->where('inventory_id', $inventory->id)
-        ->first()->id;
+        ->delete();
+
+        if(!$deleted){
+            return $this->redirectWith('There is a problem at deleting');
+        }
 
         $name = Inventory::where('id',$inventory->id)->first()->name;
 
-        InventoryItem::destroy($id);
-
-        return $redirect->with($redirectKey, "Item removed from $name successfully");
+        return $this->redirectWith("Item removed from $name successfully");
     }
 }
