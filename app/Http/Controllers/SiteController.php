@@ -6,6 +6,7 @@ use App\Models\Link;
 use App\Models\Site;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SiteController extends Controller
 {
@@ -32,12 +33,15 @@ class SiteController extends Controller
     }
 
     public function edit(Site $site){
+        Gate::authorize('view',$site);
         return view('sites.edit',[
             'site' => $site,
         ]);
     }
 
     public function update(Request $request, Site $site){
+        Gate::authorize('update',$site);
+
         $validation = $request->validate([
             'name' => 'required|max:50',
         ]);
@@ -52,6 +56,7 @@ class SiteController extends Controller
     }
 
     public function destroy(Site $site){
+        Gate::authorize('delete',$site);
         Site::destroy($site->id);
 
         Link::where('site',$site->name)->where('user_id',Auth::id())->update(['site' => '']);
