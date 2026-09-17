@@ -59,8 +59,6 @@ class SiteController extends Controller
         Gate::authorize('delete',$site);
         Site::destroy($site->id);
 
-        Link::where('site',$site->name)->where('user_id',Auth::id())->update(['site' => '']);
-
         return redirect('/sites')->with('site.destroy', 'Site deleted Successfully');
     }
 }

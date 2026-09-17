@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LinkRequest;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
 class LinkController extends Controller
 {
@@ -19,13 +19,15 @@ class LinkController extends Controller
             $links = Link::whereLike('title',"%$request->search%",false)->where('user_id',Auth::id());
 
             if(count($sites)){
-                $links = $links->whereIn('site',$sites);
+                $links = $links->withWhereHas('site', function ($query) use ($sites) {
+                    $query->whereIn('name', $sites);
+                });
             }
 
-            $links = $links->get();
+            $links = $links->with('site')->get();
 
         }else{
-            $links = Auth::user()->links;
+            $links = Auth::user()->links()->with('site')->get();
         }
 
         $sites = Auth::user()->sites;
@@ -51,27 +53,15 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LinkRequest $request)
     {
-        $validate = $request->validate([
-            'title' => 'required|min:8|max:255',
-            'description' => 'required|min:8',
-            'url' => 'required|url',
-            'site' => ['required', Rule::exists('sites','name')->where(function ($query){
-                $query->where('user_id', auth()->id());
-            })],
-            'status' => 'boolean'
+        $site_id = Auth::user()->sites()->where('name', $request->site)->first('id')->id;
+
+        Link::create([
+            'user_id' => Auth::id(),
+            'site_id' => $site_id,
+            ...$request->only('title', 'description', 'url', 'status'),
         ]);
-
-        $link = new Link();
-        $link->user_id = Auth::user()->id;
-        $link->title = $validate['title'];
-        $link->description = $validate['description'];
-        $link->url = $validate['url'];
-        $link->site = $validate['site'];
-        $link->status = $validate['status'];
-
-        $link->save();
 
         return redirect('/links')->with('link.store', 'Link Created Successfully');
     }
@@ -103,26 +93,16 @@ class LinkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Link $link)
+    public function update(LinkRequest $request, Link $link)
     {
         Gate::authorize('update',$link);
 
-        $validate = $request->validate([
-            'title' => 'required|min:8|max:255',
-            'description' => 'required|min:8',
-            'url' => 'required|url',
-            'site' => ['required', Rule::exists('sites','name')->where(function ($query){
-                $query->where('user_id', auth()->id());
-            })],
-            'status' => 'boolean'
-        ]);
+        $site_id = Auth::user()->sites()->where('name', $request->site)->first('id')->id;
 
-        $link->title = $validate['title'];
-        $link->description = $validate['description'];
-        $link->url = $validate['url'];
-        $link->site = $validate['site'];
-        $link->status = $validate['status'];
-        $link->save();
+        $link->update([
+            'site_id' => $site_id,
+            ...$request->only('title', 'description', 'url', 'status'),
+        ]);
 
         return redirect('/links')->with('link.update', 'Link Updated Successfully');
     }

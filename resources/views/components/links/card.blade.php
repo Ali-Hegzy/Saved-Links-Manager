@@ -89,7 +89,7 @@
         </x-ui.vKebabMenu>
     </div>
     <p class="line-clamp-1">{{ $link->description }}</p>
-    <p>Site : {{ $link->site }}</p>
+    <p>Site : {{ $link->site->name ?? '' }}</p>
     <div class="flex justify-between">
         <p>Watched : {{ $link->status ? 'Yes' : 'No' }}</p>
         <div class="links">

@@ -10,11 +10,15 @@ class Link extends Model
     /** @use HasFactory<\Database\Factories\LinkFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'site', 'status'];
+    protected $fillable = ['user_id' ,'title', 'description', 'url', 'site_id', 'status'];
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function user(){
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function site(){
+        return $this->belongsTo(Site::class);
     }
 }
