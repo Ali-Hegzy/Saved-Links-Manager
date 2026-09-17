@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function (){
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('sites', SiteController::class);
+    Route::resource('sites', SiteController::class)->except(['create', 'show']);
 });
 
 Route::middleware('auth')->group(function (){
