@@ -24,10 +24,10 @@ class LinkController extends Controller
                 });
             }
 
-            $links = $links->with('site')->get();
+            $links = $links->with('site')->paginate(5)->withQueryString();
 
         }else{
-            $links = Auth::user()->links()->with('site')->get();
+            $links = Auth::user()->links()->with('site')->paginate(5);
         }
 
         $sites = Auth::user()->sites;

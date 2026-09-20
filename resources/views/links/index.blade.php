@@ -8,4 +8,7 @@
         There is no links <a href="{{ route('links.create') }}" class="text-primary underline">Create One</a>
     @endempty
     </div>
+    <div class="my-5">
+        {{ $links->links() }}
+    </div>
 </x-layout>
