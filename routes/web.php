@@ -22,7 +22,11 @@ Route::post('/login', [SessionController::class,'create'])->middleware('guest');
 Route::delete('/logout', [SessionController::class,'destroy'])->middleware('auth');
 
 Route::middleware('auth')->group(function (){
-    Route::resource('links', LinkController::class);
+    Route::put('links/{link}', [LinkController::class,'update'])
+        ->middleware('can:update,link')
+        ->name('links.update');
+
+    Route::resource('links', LinkController::class)->except(['update']);
 });
 
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');

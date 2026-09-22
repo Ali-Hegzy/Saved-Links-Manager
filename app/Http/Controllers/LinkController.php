@@ -100,8 +100,6 @@ class LinkController extends Controller
      */
     public function update(LinkRequest $request, Link $link)
     {
-        Gate::authorize('update',$link);
-
         $site_id = $this->getSiteId($request);
 
         $link->update([
