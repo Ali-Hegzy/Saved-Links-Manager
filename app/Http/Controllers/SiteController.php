@@ -46,11 +46,8 @@ class SiteController extends Controller
             'name' => 'required|max:50',
         ]);
 
-        $old = $site->name;
         $site->name = $validation['name'];
         $site->save();
-
-        Link::where('site',$old)->where('user_id',Auth::id())->update(['site' => $validation['name']]);
 
         return redirect('/sites')->with('site.update', 'Site Updated Successfully');
     }
