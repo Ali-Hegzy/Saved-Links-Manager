@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InventoryRequest;
 use App\Models\Inventory;
 use App\Models\Link;
 use Illuminate\Http\Request;
@@ -33,19 +34,12 @@ class InventoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(InventoryRequest $request)
     {
-        $validation = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
+        Inventory::create([
+            'user_id' => Auth::id(),
+            ...$request->only('name', 'description'),
         ]);
-
-        $inventory = new Inventory();
-        $inventory->user_id = auth()->id();
-        $inventory->name = $validation['name'];
-        $inventory->description = $validation['description'];
-
-        $inventory->save();
 
         return redirect('/inventories')->with('inventory.store', 'Inventory Created Successfully');
     }
@@ -87,18 +81,13 @@ class InventoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Inventory $inventory)
+    public function update(InventoryRequest $request, Inventory $inventory)
     {
         Gate::authorize('update',$inventory);
 
-        $validation = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'required',
+        $inventory->update([
+            ...$request->only(['name','description']),
         ]);
-
-        $inventory->name = $validation['name'];
-        $inventory->description = $validation['description'];
-        $inventory->save();
 
         return redirect('/inventories')->with('inventory.update', 'Inventory Updated Successfully');
     }
