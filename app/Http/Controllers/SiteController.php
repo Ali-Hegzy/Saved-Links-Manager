@@ -40,8 +40,6 @@ class SiteController extends Controller
     }
 
     public function update(Request $request, Site $site){
-        Gate::authorize('update',$site);
-
         $validation = $request->validate([
             'name' => 'required|max:50',
         ]);

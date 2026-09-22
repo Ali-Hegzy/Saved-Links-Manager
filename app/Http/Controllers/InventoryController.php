@@ -83,8 +83,6 @@ class InventoryController extends Controller
      */
     public function update(InventoryRequest $request, Inventory $inventory)
     {
-        Gate::authorize('update',$inventory);
-
         $inventory->update([
             ...$request->only(['name','description']),
         ]);
