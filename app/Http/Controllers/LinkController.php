@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Gate;
 
 class LinkController extends Controller
 {
+    private function getSiteId(LinkRequest $request) : string
+    {
+        return Auth::user()->sites()->where('name', $request->site)->first('id')->id;
+    }
+
     public function index(Request $request)
     {
         if(!empty($request->query())){
@@ -55,7 +60,7 @@ class LinkController extends Controller
      */
     public function store(LinkRequest $request)
     {
-        $site_id = Auth::user()->sites()->where('name', $request->site)->first('id')->id;
+        $site_id = $this->getSiteId($request);
 
         Link::create([
             'user_id' => Auth::id(),
@@ -97,7 +102,7 @@ class LinkController extends Controller
     {
         Gate::authorize('update',$link);
 
-        $site_id = Auth::user()->sites()->where('name', $request->site)->first('id')->id;
+        $site_id = $this->getSiteId($request);
 
         $link->update([
             'site_id' => $site_id,
