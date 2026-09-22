@@ -32,11 +32,19 @@ Route::middleware('auth')->group(function (){
 Route::get('/profile',[UserController::class,'index'])->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('sites', SiteController::class)->except(['create', 'show']);
+    Route::put('sites/{site}', [SiteController::class,'update'])
+        ->middleware('can:update,site')
+        ->name('sites.update');
+
+    Route::resource('sites', SiteController::class)->except(['create', 'show', 'update']);
 });
 
 Route::middleware('auth')->group(function (){
-    Route::resource('inventories',InventoryController::class);
+    Route::put('inventories/{inventory}', [InventoryController::class,'update'])
+        ->middleware('can:update,inventory')
+        ->name('inventories.update');
+
+    Route::resource('inventories',InventoryController::class)->except(['update']);
 });
 
 Route::post('/invItems', [inventoryItemController::class, 'store'])->middleware('auth')->name('inventoryItems.store');
