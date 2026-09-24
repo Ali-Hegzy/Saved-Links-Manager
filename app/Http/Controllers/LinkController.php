@@ -18,10 +18,13 @@ class LinkController extends Controller
     public function index(Request $request)
     {
         if(!empty($request->query())){
-            $sites = array_keys($request->all());
-            array_shift($sites);
+            $sites = array_keys($request->except(['search', 'page']));
 
-            $links = Link::whereLike('title',"%$request->search%",false)->where('user_id',Auth::id());
+            $links = Auth::user()->links();
+
+            $links->when($request->filled('search'), function($query) use ($request){
+                $query->whereLike('title',"%$request->search%",false);
+            });
 
             if(count($sites)){
                 $links = $links->withWhereHas('site', function ($query) use ($sites) {
