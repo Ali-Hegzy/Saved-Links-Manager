@@ -34,15 +34,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function links(){
+    public function links()
+    {
         return $this->hasMany(Link::class);
     }
 
-    public function sites(){
+    public function sites()
+    {
         return $this->hasMany(Site::class);
     }
 
-    public function inventories(){
+    public function inventories()
+    {
         return $this->hasMany(Inventory::class);
     }
 }

@@ -23,7 +23,7 @@ class RegisterController extends Controller
         $user = User::create($validated);
 
         Auth::login($user);
-        $site = new Site();
+        $site = new Site;
         $site->user_id = Auth::user()->id;
         $site->save();
 

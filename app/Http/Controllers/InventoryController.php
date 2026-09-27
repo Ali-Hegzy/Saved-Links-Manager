@@ -16,10 +16,10 @@ class InventoryController extends Controller
      */
     public function index(Request $request)
     {
-        $inventories = Inventory::whereLike('name',"%$request->search%",false)->where('user_id',Auth::id())->get();
+        $inventories = Inventory::whereLike('name', "%$request->search%", false)->where('user_id', Auth::id())->get();
 
         return view('Inventory.index', [
-            "inventories" => $inventories,
+            'inventories' => $inventories,
         ]);
     }
 
@@ -49,22 +49,22 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        Gate::authorize('view',$inventory);
+        Gate::authorize('view', $inventory);
 
         $inventories = Auth::user()->inventories;
         $items = $inventory->items;
         $ids = [];
 
-        foreach($items as $item){
+        foreach ($items as $item) {
             $ids[] = $item->link_id;
         }
 
-        $links = Link::whereIn('id',$ids)->get();
+        $links = Link::whereIn('id', $ids)->get();
 
-        return view('Inventory.show',[
-            "inventory" => $inventory,
-            "items" => $links,
-            "inventories" => $inventories,
+        return view('Inventory.show', [
+            'inventory' => $inventory,
+            'items' => $links,
+            'inventories' => $inventories,
         ]);
     }
 
@@ -73,9 +73,9 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
-        Gate::authorize('view',$inventory);
+        Gate::authorize('view', $inventory);
 
-        return view('Inventory.edit',["inventory" => $inventory]);
+        return view('Inventory.edit', ['inventory' => $inventory]);
     }
 
     /**
@@ -84,7 +84,7 @@ class InventoryController extends Controller
     public function update(InventoryRequest $request, Inventory $inventory)
     {
         $inventory->update([
-            ...$request->only(['name','description']),
+            ...$request->only(['name', 'description']),
         ]);
 
         return redirect('/inventories')->with('inventory.update', 'Inventory Updated Successfully');
@@ -95,7 +95,7 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
-        Gate::authorize('delete',$inventory);
+        Gate::authorize('delete', $inventory);
 
         $inventory::destroy($inventory->id);
 

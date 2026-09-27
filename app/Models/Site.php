@@ -8,13 +8,15 @@ class Site extends Model
 {
     protected $fillable = ['name'];
 
-    protected $guarded = ['id','user_id'];
+    protected $guarded = ['id', 'user_id'];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function links(){
+    public function links()
+    {
         return $this->hasMany(Link::class);
     }
 }

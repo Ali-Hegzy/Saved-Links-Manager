@@ -12,7 +12,7 @@ class UserController extends Controller
         $sites = Auth::user()->sites()->limit(5)->get();
         $linksCount = Auth::user()->links()->count();
 
-        return view('profile',[
+        return view('profile', [
             'user' => $user,
             'sites' => $sites,
             'linksCount' => $linksCount,

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('links', function (Blueprint $table) {
             $table->unsignedBigInteger('site')->nullable()->change();
-            $table->renameColumn('site','site_id');
+            $table->renameColumn('site', 'site_id');
             $table->foreign('site_id')->references('id')->on('sites')->nullOnDelete();
         });
     }

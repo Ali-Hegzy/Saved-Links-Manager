@@ -10,23 +10,23 @@ use Illuminate\Support\Facades\Gate;
 
 class LinkController extends Controller
 {
-    private function getSiteId(LinkRequest $request) : string
+    private function getSiteId(LinkRequest $request): string
     {
         return Auth::user()->sites()->where('name', $request->site)->first('id')->id;
     }
 
     public function index(Request $request)
     {
-        if(!empty($request->query())){
+        if (! empty($request->query())) {
             $sites = array_keys($request->except(['search', 'page']));
 
             $links = Auth::user()->links();
 
-            $links->when($request->filled('search'), function($query) use ($request){
-                $query->whereLike('title',"%$request->search%",false);
+            $links->when($request->filled('search'), function ($query) use ($request) {
+                $query->whereLike('title', "%$request->search%", false);
             });
 
-            if(count($sites)){
+            if (count($sites)) {
                 $links = $links->withWhereHas('site', function ($query) use ($sites) {
                     $query->whereIn('name', $sites);
                 });
@@ -34,14 +34,14 @@ class LinkController extends Controller
 
             $links = $links->with('site')->paginate(5)->withQueryString();
 
-        }else{
+        } else {
             $links = Auth::user()->links()->with('site')->paginate(5);
         }
 
         $sites = Auth::user()->sites;
         $inventories = Auth::user()->inventories;
 
-        return view('links.index',[
+        return view('links.index', [
             'links' => $links,
             'sites' => $sites,
             'inventories' => $inventories,
@@ -55,7 +55,7 @@ class LinkController extends Controller
     {
         $sites = Auth::user()->sites;
 
-        return view('links.create',['sites' => $sites]);
+        return view('links.create', ['sites' => $sites]);
     }
 
     /**
@@ -79,9 +79,9 @@ class LinkController extends Controller
      */
     public function show(Link $link)
     {
-        Gate::authorize('view',$link);
+        Gate::authorize('view', $link);
 
-        return view('links.show',["link" => $link]);
+        return view('links.show', ['link' => $link]);
     }
 
     /**
@@ -89,12 +89,12 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        Gate::authorize('view',$link);
+        Gate::authorize('view', $link);
         $sites = Auth::user()->sites;
 
-        return view('links.edit',[
-            "link" => $link,
-            "sites" => $sites,
+        return view('links.edit', [
+            'link' => $link,
+            'sites' => $sites,
         ]);
     }
 
@@ -118,7 +118,7 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        Gate::authorize('delete',$link);
+        Gate::authorize('delete', $link);
 
         Link::destroy($link->id);
 

@@ -9,14 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('Auth.login');
     }
 
-    public function create(LoginRequest $request){
+    public function create(LoginRequest $request)
+    {
         $validated = $request->validated();
 
-        if(! Auth::attempt($validated)){
+        if (! Auth::attempt($validated)) {
             return back()
                 ->withErrors(['password' => 'Email or password is incorrect.'])
                 ->withInput();
@@ -27,7 +29,8 @@ class SessionController extends Controller
         return redirect()->intended('/')->with('loggedIn', 'Logged In Successfully.');
     }
 
-    public function destroy(Request $request){
+    public function destroy(Request $request)
+    {
         Auth::logout();
 
         $request->session()->invalidate();

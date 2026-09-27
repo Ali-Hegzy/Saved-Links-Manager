@@ -10,7 +10,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::rename('categories','sites');
+        Schema::rename('categories', 'sites');
     }
 
     /**
@@ -18,6 +18,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::rename('sites','categories');
+        Schema::rename('sites', 'categories');
     }
 };
