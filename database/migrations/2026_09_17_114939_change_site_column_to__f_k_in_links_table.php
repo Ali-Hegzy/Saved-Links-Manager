@@ -24,7 +24,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('links', function (Blueprint $table) {
-            //
+            $table->string('status')->default('not_watched')->change();
+            $table->renameColumn('site_id', 'site');
+            $table->dropForeign(['site_id']);
         });
     }
 };
