@@ -10,6 +10,6 @@ class InventoryItem extends Model
 {
     public function inventory()
     {
-        $this->belongsTo(Inventory::class);
+        return $this->belongsTo(Inventory::class);
     }
 }

@@ -52,6 +52,7 @@ class InventoryController extends Controller
         Gate::authorize('view', $inventory);
 
         $inventories = Auth::user()->inventories;
+
         $items = $inventory->items;
         $ids = [];
 
@@ -59,7 +60,7 @@ class InventoryController extends Controller
             $ids[] = $item->link_id;
         }
 
-        $links = Link::whereIn('id', $ids)->get();
+        $links = Link::whereIn('id', $ids)->with('site')->get();
 
         return view('Inventory.show', [
             'inventory' => $inventory,
