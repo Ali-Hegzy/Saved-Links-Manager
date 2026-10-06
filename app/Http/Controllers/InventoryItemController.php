@@ -8,7 +8,7 @@ use App\Models\InventoryItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-class inventoryItemController extends Controller
+class InventoryItemController extends Controller
 {
     private static RedirectResponse $redirect;
 

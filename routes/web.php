@@ -3,7 +3,7 @@
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SessionController;
 use App\Http\Controllers\InventoryController;
-use App\Http\Controllers\inventoryItemController;
+use App\Http\Controllers\InventoryItemController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -44,6 +44,6 @@ Route::middleware('auth')->group(function () {
         ->name('inventories.update');
     Route::resource('inventories', InventoryController::class)->except(['update']);
 
-    Route::post('/invItems', [inventoryItemController::class, 'store'])->name('inventoryItems.store');
-    Route::delete('/invItems', [inventoryItemController::class, 'destroy'])->name('inventoryItems.destroy');
+    Route::post('/invItems', [InventoryItemController::class, 'store'])->name('inventoryItems.store');
+    Route::delete('/invItems', [InventoryItemController::class, 'destroy'])->name('inventoryItems.destroy');
 });
