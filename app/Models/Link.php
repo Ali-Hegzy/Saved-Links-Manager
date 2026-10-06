@@ -13,8 +13,6 @@ class Link extends Model
 
     protected $fillable = ['user_id', 'title', 'description', 'url', 'site_id', 'status'];
 
-    protected $guarded = ['id', 'created_at', 'updated_at'];
-
     public function user()
     {
         return $this->belongsTo(User::class);

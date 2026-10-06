@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable(['user_id', 'name', 'description'])]
-#[Guarded(['id', 'created_at', 'updated_at'])]
 class Inventory extends Model
 {
     public function user()
