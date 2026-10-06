@@ -2,7 +2,7 @@
     'label' => '',
     'name',
     'items',
-    'default',
+    'default' => null,
 ])
 
 <div class="flex flex-col gap-1.5">
@@ -11,7 +11,7 @@
         @foreach ($items as $item)
             <option
                 value="{{ $item->name }}"
-                @selected( (old($name) === $item->name) ?: ($item->id === $default->id) ) >{{ $item->name }}
+                @selected( (old($name) === $item->name) ?: ($item->id === $default?->id) ) >{{ $item->name }}
             </option>
         @endforeach
     </select>
