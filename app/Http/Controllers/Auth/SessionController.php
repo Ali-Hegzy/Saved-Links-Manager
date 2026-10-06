@@ -14,7 +14,7 @@ class SessionController extends Controller
         return view('Auth.login');
     }
 
-    public function create(LoginRequest $request)
+    public function store(LoginRequest $request)
     {
         $validated = $request->validated();
 

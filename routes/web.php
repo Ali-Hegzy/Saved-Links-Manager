@@ -15,10 +15,10 @@ Route::get('/', function () {
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'index']);
-    Route::post('/register', [RegisterController::class, 'create'])->middleware('throttle:login');
+    Route::post('/register', [RegisterController::class, 'store'])->middleware('throttle:login');
 
     Route::get('/login', [SessionController::class, 'index'])->name('login');
-    Route::post('/login', [SessionController::class, 'create'])->middleware('throttle:login');
+    Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:login');
 });
 
 Route::middleware('auth')->group(function () {
