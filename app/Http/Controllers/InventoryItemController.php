@@ -64,7 +64,7 @@ class InventoryItemController extends Controller
             return $this->redirectWith('There is a problem at deleting');
         }
 
-        $name = Inventory::where('id', $inventory->id)->first()->name;
+        $name = $inventory->name;
 
         return $this->redirectWith("Item removed from $name successfully");
     }
