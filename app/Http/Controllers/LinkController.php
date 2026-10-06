@@ -32,10 +32,10 @@ class LinkController extends Controller
                 });
             }
 
-            $links = $links->with('site')->paginate(5)->withQueryString();
+            $links = $links->with('site')->latest()->paginate(5)->withQueryString();
 
         } else {
-            $links = Auth::user()->links()->with('site')->paginate(5);
+            $links = Auth::user()->links()->with('site')->latest()->paginate(5);
         }
 
         $sites = Auth::user()->sites;
