@@ -10,20 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class InventoryItemController extends Controller
 {
-    private static RedirectResponse $redirect;
-
     private static string $redirectKey = 'invMessage';
-
-    public function __construct()
-    {
-        self::$redirect = back();
-    }
 
     private function redirectWith(string $message, ?string $key = null): RedirectResponse
     {
         $key = $key ?? self::$redirectKey;
 
-        return self::$redirect->with($key, $message);
+        return back()->with($key, $message);
     }
 
     /**
