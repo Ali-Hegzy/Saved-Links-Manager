@@ -29,6 +29,6 @@ class RegisterController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/')->with('registerd', 'The acccount has been registerd successfully.');
+        return redirect('/')->with('registered', 'The account has been registered successfully.');
     }
 }
