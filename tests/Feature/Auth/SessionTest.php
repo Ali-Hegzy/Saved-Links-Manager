@@ -76,16 +76,42 @@ class SessionTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_user_can_logout()
+    public function test_auth_user_can_logout()
+    {
+        // Arrange
+        $user = User::factory()->create();
+
+        // Act
+        $response = $this->actingAs($user)->delete('/logout');
+
+        // Assert
+        $this->assertGuest();
+        $response->assertRedirect('/login');
+    }
+
+    public function test_guest_cannot_access_protected_page()
+    {
+        // Arrange
+
+        // Act
+        $response = $this->from('/')->get('/profile');
+
+        // Assert
+        $this->assertGuest();
+        $response->assertRedirect('/login');
+    }
+
+    public function test_auth_cannot_access_guest_only_page()
     {
         // Arrange
         $user = User::factory()->create();
 
         // Act
         $this->actingAs($user);
-        Auth::logout();
+        $response = $this->from('/links')->get('/login');
 
         // Assert
-        $this->assertGuest();
+        $this->assertAuthenticated();
+        $response->assertRedirect('/links');
     }
 }
