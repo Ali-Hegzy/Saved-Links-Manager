@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable(['link_id', 'inventory_id'])]
 class InventoryItem extends Model
 {
+    use HasFactory;
+
     public function inventory()
     {
         return $this->belongsTo(Inventory::class);
