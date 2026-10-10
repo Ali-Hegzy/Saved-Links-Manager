@@ -6,6 +6,9 @@
                 <input type='text' placeholder='Add a new site' name='name' class="outline-none"/>
                 <input type="submit" class='cursor-pointer bg-primary px-2 rounded' value="Add"/>
             </form>
+            @error('name')
+                <p class="text-red-600">{{ $message }}</p>
+            @enderror
         </x-ui.card>
 
         <x-filter class="m-0! p-0!"/>
