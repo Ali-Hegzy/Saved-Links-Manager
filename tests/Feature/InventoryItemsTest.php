@@ -81,38 +81,38 @@ class InventoryItemsTest extends TestCase
     }
 
     public function test_user_cannot_add_another_users_item_to_his_inventory()
-{
-    // Arrange
-    $userA = User::factory()->create();
-    $userB = User::factory()->create();
+    {
+        // Arrange
+        $userA = User::factory()->create();
+        $userB = User::factory()->create();
 
-    $InvA = Inventory::factory()->for($userA)->create([
-        'name' => 'Tech',
-        'description' => 'For Tech',
-    ]);
-    $LinkB = Link::factory()->for($userB)->create([
+        $InvA = Inventory::factory()->for($userA)->create([
+            'name' => 'Tech',
+            'description' => 'For Tech',
+        ]);
+        $LinkB = Link::factory()->for($userB)->create([
             'title' => 'PHP',
             'description' => 'Learn PSR',
             'site_id' => 1,
             'status' => 0, // Not watched
             'url' => 'https://www.google.com',
-    ]);
+        ]);
 
-    $data = [
-        'item' => $LinkB->id,
-        'inventory' => $InvA->id,
-    ];
+        $data = [
+            'item' => $LinkB->id,
+            'inventory' => $InvA->id,
+        ];
 
-    // Act
-    $response = $this->actingAs($userA)->from('/links')->post('/invItems', $data);
+        // Act
+        $response = $this->actingAs($userA)->from('/links')->post('/invItems', $data);
 
-    // Assert
-    $response->assertNotFound();
-    $this->assertDatabaseMissing('inventory_items', [
-        'link_id' => $LinkB->id,
-        'inventory_id' => $InvA->id,
-    ]);
-}
+        // Assert
+        $response->assertNotFound();
+        $this->assertDatabaseMissing('inventory_items', [
+            'link_id' => $LinkB->id,
+            'inventory_id' => $InvA->id,
+        ]);
+    }
 
     public function test_user_cannot_add_item_already_exits_in_his_inventory()
     {
@@ -288,5 +288,4 @@ class InventoryItemsTest extends TestCase
         ]);
         $this->assertDatabaseCount('inventory_items', 0);
     }
-
 }

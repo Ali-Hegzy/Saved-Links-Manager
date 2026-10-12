@@ -14,7 +14,6 @@ class SiteTest extends TestCase
      * and the default value for column 'name' in site DB is 'Youtube',
      * so in some cases in testing there is 4 default value for each user.
      */
-
     public function test_user_can_view_their_own_sites()
     {
         // Arrange
@@ -24,7 +23,7 @@ class SiteTest extends TestCase
         ]);
 
         // Act
-        $response = $this->actingAs($user)->get("/sites");
+        $response = $this->actingAs($user)->get('/sites');
 
         // Assert
         $response->assertOk();
@@ -56,15 +55,15 @@ class SiteTest extends TestCase
     public function test_user_can_create_a_site()
     {
         // Arrange
-        $user = User::withoutEvents(function (){
+        $user = User::withoutEvents(function () {
             return User::factory()->create();
-        }) ;
+        });
         $data = [
-            'name' => 'GeeksForGeeks'
+            'name' => 'GeeksForGeeks',
         ];
 
         // Act
-        $response = $this->actingAs($user)->from('/sites')->post('/sites',$data);
+        $response = $this->actingAs($user)->from('/sites')->post('/sites', $data);
 
         // Assert
         $response->assertRedirect('/sites');
@@ -72,7 +71,7 @@ class SiteTest extends TestCase
         $response->assertSessionHas('site.store', 'Site Created Successfully');
 
         $this->assertDatabaseCount('sites', 1);
-        $this->assertDatabaseHas('sites',[
+        $this->assertDatabaseHas('sites', [
             'user_id' => $user->id,
             ...$data,
         ]);
@@ -89,10 +88,10 @@ class SiteTest extends TestCase
         ];
 
         // Act
-        $response = $this->actingAs($user)->from("/sites")->post("/sites", $data);
+        $response = $this->actingAs($user)->from('/sites')->post('/sites', $data);
 
         // Assert
-        $response->assertRedirect("/sites");
+        $response->assertRedirect('/sites');
         $response->assertSessionHasErrors(['name']);
 
         $this->assertDatabaseCount('sites', 0);
@@ -201,7 +200,7 @@ class SiteTest extends TestCase
         $site = Site::factory()->for($user)->create($data);
 
         // Act
-        $response = $this->actingAs($user)->from("/sites")->delete("/sites/{$site->id}");
+        $response = $this->actingAs($user)->from('/sites')->delete("/sites/{$site->id}");
 
         // Assert
         $response->assertRedirect('/sites');
@@ -236,10 +235,9 @@ class SiteTest extends TestCase
         $response->assertNotFound();
 
         $this->assertDatabaseCount('sites', 1);
-        $this->assertDatabaseHas('sites',[
+        $this->assertDatabaseHas('sites', [
             'user_id' => $userB->id,
             ...$data,
         ]);
     }
-
 }
