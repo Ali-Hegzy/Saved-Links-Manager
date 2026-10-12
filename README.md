@@ -11,6 +11,7 @@ A web site that helps you to manage your saved links.
 - **BackEnd** : Laravel
 - **FrontEnd** : Blade, Tailwind, Alpine.js
 - **DataBase** : Sqlite
+- **Testing** : Pest
 
 ## Local Installation and Execution Steps
 ```bash
